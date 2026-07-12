@@ -1,10 +1,11 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { clsx } from 'clsx'
 import { PlusIcon } from 'lucide-react'
-import z from 'zod'
+import { z } from 'zod'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import { createView, getViews } from '#/services/view'
+import { createViewMutationOptions, getViews } from '#/services/view'
 import { Button } from '#/ui/button'
 import { IconButton } from '#/ui/icon-button'
 import { hstack, vstack } from '#/ui/layout'
@@ -35,6 +36,8 @@ export const Route = createFileRoute('/')({
 })
 
 function Home() {
+	const queryClient = useQueryClient()
+	const createViewMutation = useMutation(createViewMutationOptions(queryClient))
 	const state = useViewStore((s) => s.state)
 	const setState = useViewStore((s) => s.setState)
 	return (
@@ -62,7 +65,7 @@ function Home() {
 					<form
 						className={vstack('gap-6')}
 						action={async (formData) => {
-							await createView({
+							await createViewMutation.mutateAsync({
 								name: z.string().trim().min(1).parse(formData.get('name')),
 								scope: 'home',
 								definition: state,
