@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { getViews } from '#/services/view'
+import {clsx } from 'clsx'
 
 type HomeViewState = { name: string }
 const useViewStore = create(
@@ -30,14 +31,12 @@ function Home() {
 	const state = useViewStore((s) => s.state)
 	const setState = useViewStore((s) => s.setState)
 	return (
-		<div className="p-8">
-			<h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>
-			<p className="mt-4 text-lg">
-				Edit <code>src/routes/index.tsx</code> to get started.
-			</p>
+		<div className={clsx('flex flex-col gap-8', "p-8")}>
+			<h1 className="text-4xl font-bold">Home</h1>
 			<input
 				type="text"
-				value={state.name}
+        value={state.name}
+        className={clsx('border rounded', 'px-3 py-2')}
 				onChange={(e) => {
 					setState({ name: e.target.value })
 				}}
