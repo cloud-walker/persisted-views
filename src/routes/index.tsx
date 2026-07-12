@@ -4,11 +4,11 @@ import { PlusIcon } from 'lucide-react'
 import z from 'zod'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import { raise } from '#/helpers/raise'
 import { createView, getViews } from '#/services/view'
 import { Button } from '#/ui/button'
 import { IconButton } from '#/ui/icon-button'
 import { hstack, vstack } from '#/ui/layout'
+import { PageTitle } from '#/ui/page-title'
 import { TextInput } from '#/ui/text-input'
 
 type HomeViewState = { name: string }
@@ -40,7 +40,7 @@ function Home() {
 	return (
 		<div className={vstack('gap-8', 'p-8')}>
 			<header className={hstack('gap-2')}>
-				<h1 className="text-4xl font-bold">Home</h1>
+				<PageTitle>Home</PageTitle>
 				<IconButton
 					icon={<PlusIcon />}
 					label="Save current view"
